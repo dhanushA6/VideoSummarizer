@@ -1,0 +1,33 @@
+body {
+    /* background: url('path/to/your/background-image.jpg') no-repeat center center fixed;
+     */ 
+    background-color: black;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.result {
+    margin-top: 20px;
+}
+
+.progress {
+    height: 30px;
+}
+
+.loading-text {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+}

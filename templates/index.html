@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Processor</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style/style.css">
+
+    <style>
+        body {
+            background : black;
+            font-family: Arial, sans-serif;
+        }
+        .glass {
+            background: rgba(220, 216, 216, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            width: 50%;
+            margin-top: 50px;
+        }
+        .result {
+            margin-top: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container bg-white glass">
+        <div class="row justify-content-center">
+            <div class="col-md-8 ">
+                <h1 class="text-center">Video Summarizer</h1>
+                <form id="video-form">
+                    <div class="form-group">
+                        <label for="youtube_url">YouTube URL:</label>
+                        <input type="text" class="form-control" id="youtube_url" name="youtube_url" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Process Video</button>
+                </form>
+                <div class="result" id="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('video-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "";
+            const formData = new FormData(this);
+            fetch('/process', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                <!-- resultDiv = document.getElementById('result'); -->
+                resultDiv.innerHTML = `
+                    <h3>Transcript:</h3>
+                    <p>${data.transcript}</p>
+                    <h3>Summary:</h3>
+                    <p>${data.summary}</p>
+                    <h3>Classification:</h3>
+                    <pre>${JSON.stringify(data.classification, null, 2)}</pre>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
